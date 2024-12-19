@@ -73,11 +73,11 @@ function Register() {
           />
           <label htmlFor="">Profile Picture</label>
           <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-          <label htmlFor="">Country</label>
+          <label htmlFor="">City</label>
           <input
             name="country"
             type="text"
-            placeholder="enter country"
+            placeholder="enter city"
             onChange={handleChange}
           />
         </div>

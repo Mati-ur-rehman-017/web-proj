@@ -1,90 +1,97 @@
-import React, { useReducer, useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./Add.scss";
-import { gigReducer, INITIAL_STATE } from "../../reducers/gigReducer";
-import upload from "../../utils/upload";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 import { useNavigate } from "react-router-dom";
+import upload from "../../utils/upload";
 
 const Add = () => {
-  const [singleFile, setSingleFile] = useState(undefined);
-  const [files, setFiles] = useState([]);
+  const [itemName, setItemName] = useState("");
+  const [userId, setUserId] = useState(""); // Add userId here
+  const [img, setImg] = useState(null);
+  const [price, setPrice] = useState(0);
+  const [description, setDescription] = useState("");
+  const [category, setCategory] = useState("");
   const [uploading, setUploading] = useState(false);
 
-  const [state, dispatch] = useReducer(gigReducer, INITIAL_STATE);
-
-  //
-  const options = ["Sell", "Rent"];
-
-  const handleChange = (e) => {
-    dispatch({
-      type: "CHANGE_INPUT",
-      payload: { name: e.target.name, value: e.target.value },
-    });
-  };
-
-  const handleFeature = (e) => {
-    e.preventDefault();
-    dispatch({
-      type: "ADD_FEATURE",
-      payload: e.target[0].value,
-    });
-    e.target[0].value = "";
-  };
-
-  const handleUpload = async () => {
-    setUploading(true);
-    try {
-      const cover = await upload(singleFile);
-
-      const images = await Promise.all(
-        [...files].map(async (file) => {
-          const url = await upload(file);
-          return url;
-        })
-      );
-      setUploading(false);
-      dispatch({ type: "ADD_IMAGES", payload: { cover, images } });
-    } catch (err) {
-      console.log(err);
-    }
-  };
+  const options = ["Cakes", "Buns", "Cupcakes", "Cookies", "Pastries", "Bread", "Brownies", "Special Items"]; // Options for category selection
 
   const navigate = useNavigate();
 
-  const queryClient = useQueryClient();
+  // Handle file upload (called when the form is submitted)
+  const handleUpload = async () => {
+    console.log("here");
+    if (!img) {
+      console.log("No image selected");
+      return null; // If no image is selected, return null
+    }
 
-  const mutation = useMutation({
-    mutationFn: (gig) => {
-      return newRequest.post("/gigs", gig);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries(["myGigs"]);
-    },
-  });
+    setUploading(true);
+    try {
+      // Assuming you have an upload function in utils
+      const imageUrl = await upload(img); // Upload the image and get the URL
+      setUploading(false);
+      return imageUrl;
+    } catch (err) {
+      console.log("Error uploading image:", err);
+      setUploading(false);
+      return null;
+    }
+  };
 
-  const handleSubmit = (e) => {
+  // Handle form submission
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    mutation.mutate(state);
-    navigate("/mygigs");
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+    // Upload image and get the image URL
+    const imageUrl = await handleUpload();
+
+    if (!imageUrl) {
+      console.log("Image upload failed or no image selected");
+      return; // Prevent form submission if image upload fails
+    }
+
+    // Prepare item data to be sent to the server
+    const newItem = {
+      itemName,
+      userId: currentUser._id, // Make sure you have userId set
+      img: imageUrl, // Set the uploaded image URL
+      price,
+      description,
+      category,
+    };
+
+    // Direct POST request to add the item
+    try {
+      await newRequest.post("/item", newItem);
+      navigate("/"); // Navigate to the items list page after successful post
+    } catch (err) {
+      console.log("Error posting item:", err);
+    }
   };
 
   return (
     <div className="add container">
       <section className="add__container">
-        <h1 className="add__container-title">Add New Gig</h1>
+        <h1 className="add__container-title">Add New Item</h1>
         <div className="add__container-sections">
           <div className="info">
-            <label htmlFor="">Title</label>
+            <label htmlFor="itemName">Item Name</label>
             <input
               type="text"
-              name="title"
-              placeholder="e.g. sell or rent something"
-              onChange={handleChange}
+              name="itemName"
+              value={itemName}
+              placeholder="Name"
+              onChange={(e) => setItemName(e.target.value)}
             />
-            <label htmlFor="">Category</label>
-            <select name="cat" id="cat" onChange={handleChange}>
-              <option value="" disabled selected>
+
+            <label htmlFor="category">Category</label>
+            <select
+              name="category"
+              value={category}
+              onChange={(e) => setCategory(e.target.value)}
+            >
+              <option value="" disabled>
                 Select a category
               </option>
               {options.map((option) => (
@@ -93,93 +100,41 @@ const Add = () => {
                 </option>
               ))}
             </select>
+
             <div className="images">
               <div className="imagesInputs">
-                <label htmlFor="">Cover Image</label>
+                <label htmlFor="img">Item Image</label>
                 <input
                   type="file"
-                  onChange={(e) => setSingleFile(e.target.files[0])}
-                />
-                <label htmlFor="">Upload Images</label>
-                <input
-                  type="file"
-                  multiple
-                  onChange={(e) => setFiles(e.target.files)}
+                  onChange={(e) => setImg(e.target.files[0])}
                 />
               </div>
-              <button className="btn upload__btn" onClick={handleUpload}>
-                {uploading ? "uploading" : "Upload"}
-              </button>
+              {uploading && <p>Uploading...</p>}
             </div>
-            <label htmlFor="">Description</label>
+
+            <label htmlFor="description">Description</label>
             <textarea
-              name="desc"
-              id=""
-              placeholder="Brief descriptions to introduce your service to customers"
-              cols="0"
-              rows="13"
-              onChange={handleChange}
+              name="description"
+              value={description}
+              placeholder="Describe your item"
+              rows="5"
+              onChange={(e) => setDescription(e.target.value)}
             ></textarea>
           </div>
+
           <div className="details">
-            <label htmlFor="">Service Title</label>
-            <input
-              type="text"
-              name="shortTitle"
-              placeholder="e.g. click great photos"
-              onChange={handleChange}
-            />
-            <label htmlFor="">Short Description</label>
-            <textarea
-              name="shortDesc"
-              onChange={handleChange}
-              id=""
-              placeholder="Short description of your service"
-              cols="30"
-              rows="10"
-            ></textarea>
-            <label htmlFor="">Delivery Time (e.g. 3 days)</label>
-            <input type="number" name="deliveryTime" onChange={handleChange} />
-            <label htmlFor="">Revision Number</label>
+            <label htmlFor="price">Price</label>
             <input
               type="number"
-              name="revisionNumber"
-              onChange={handleChange}
+              name="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
             />
-            <label htmlFor="">Add Features</label>
-            <form action="" className="featadd" onSubmit={handleFeature}>
-              <input
-                // className="featadd"
-                type="text"
-                placeholder="e.g. page design"
-              />
-              <button className="btn featadd_btn" type="submit">
-                add
-              </button>
-            </form>
-            <div className="addedfeatures">
-              {state?.features?.map((f) => (
-                <div className="item" key={f}>
-                  <button
-                    className="addedfeatures__btn btn"
-                    onClick={() =>
-                      dispatch({ type: "REMOVE_FEATURE", payload: f })
-                    }
-                  >
-                    {f}
-                    <div className="addedfeatures__btn-img">
-                      <img src="../../../public/img/others/cancel.png" alt="" />
-                    </div>
-                  </button>
-                </div>
-              ))}
-            </div>
-            <label htmlFor="">Price</label>
-            <input type="number" onChange={handleChange} name="price" />
           </div>
         </div>
+
         <button className="create__btn btn" onClick={handleSubmit}>
-          Create
+          Add Item
         </button>
       </section>
     </div>

@@ -47,7 +47,7 @@ export default function Navitem() {
                     <a>Gigs</a>
                   </Link>
                   <Link className="link" to="/add">
-                    <a>Add New Gig</a>
+                    <a>Add New Item</a>
                   </Link>
                 </>
               )}

@@ -4,7 +4,7 @@ import "./CatCard.scss";
 
 function CatCard({ card }) {
   return (
-    <Link to="/gigs">
+    <div >
       <div className="category__card">
         <img src={card.img} alt="" />
         <div className="category__details">
@@ -12,7 +12,7 @@ function CatCard({ card }) {
           <p className="category__title">{card.title}</p>
         </div>
       </div>
-    </Link>
+    </div>
   );
 }
 export default CatCard;
