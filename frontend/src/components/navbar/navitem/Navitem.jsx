@@ -30,9 +30,7 @@ export default function Navitem() {
         exit="exit"
         className="navitemsbody"
       >
-        <Link className="link" to="/">
-          <a>Home</a>
-        </Link>
+        
         {/* <Link className="link" to="/gigs">
           <a>Explore</a>
         </Link> */}
@@ -53,6 +51,9 @@ export default function Navitem() {
                   </Link>
                 </>
               )}
+              <Link className="link" to="/profile">
+                Profile
+              </Link>
               <Link className="link" to="/orders">
                 Orders
               </Link>
@@ -62,6 +63,7 @@ export default function Navitem() {
               <Link className="link" onClick={handleLogout}>
                 Logout
               </Link>
+
             </div>
           </div>
         ) : (
@@ -74,6 +76,9 @@ export default function Navitem() {
             </Link>
           </>
         )}
+        <Link className="link" to="/">
+          <a>Home</a>
+        </Link>
       </motion.div>
       {/* {links.map((link, i) => {
           const { title, href } = link;

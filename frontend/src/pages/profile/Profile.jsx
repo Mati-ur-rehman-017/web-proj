@@ -58,6 +58,7 @@ function Profile() {
         ...user,
         img: imgUrl,
       };
+      console.log('herr');
       const res = await newRequest.put("/auth/update", updatedUser);
       localStorage.setItem("currentUser", JSON.stringify(res.data)); // Update localStorage with updated data
       alert("Profile updated successfully!");
@@ -142,7 +143,16 @@ function Profile() {
             onChange={handleChange}
           ></textarea>
         </div>
-        <button type="submit" className="btn profile__btn">
+        <button
+          type="submit"
+          className="btn profile__btn"
+          style={{
+            display: "block", // Makes it a block element so it can be centered
+            margin: "10px auto", // Centers the button horizontally
+            padding: "10px 20px", // Adds padding (top-bottom: 10px, left-right: 20px)
+            textAlign: "center", // Aligns text in the center
+          }}
+        >
           Update Profile
         </button>
         {error && <p className="error">{error}</p>}
