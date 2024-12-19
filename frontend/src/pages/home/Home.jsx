@@ -36,6 +36,28 @@ function Home() {
     const filtered = items.filter((item) => item.category === category);
     setFilteredItems(filtered);
   };
+  const handleAddToCart = (item) => {
+    // Fetch the current cart from local storage
+    console.log(item);
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+  
+    // Check if the item already exists in the cart
+    const existingItem = cart.find(cartItem => cartItem._id === item._id);
+  
+    if (existingItem) {
+      // If the item exists, increase its quantity
+      existingItem.quantity += 1;
+    } else {
+      // If the item does not exist, add it with a quantity of 1
+      cart.push({ ...item, quantity: 1 });
+    }
+  
+    // Save the updated cart back to local storage
+    localStorage.setItem("cart", JSON.stringify(cart));
+  
+    console.log(`${item.itemName} added to cart`);
+  };
+  
   return (
     <div className="home container">
       <Featured />

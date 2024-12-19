@@ -1,0 +1,92 @@
+.orders {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    .orders__container {
+      width: 100%;
+      padding: 50px 0px;
+  
+      .title-bar {
+        display: flex;
+        justify-content: space-between;
+  
+        .title {
+          font-size: var(--h1-font-size);
+          font-family: var(--cabinet);
+          color: var(--title-color);
+          font-style: normal;
+          font-weight: 700;
+          letter-spacing: -0.01em;
+          line-height: 1.1em;
+          margin-bottom: 2rem;
+        }
+  
+        .addgig__btn {
+          font-size: var(--h3-font-size);
+          padding: 0.5rem 1rem;
+        }
+      }
+  
+      table {
+        width: 100%;
+        background-color: var(--container-color);
+        border-spacing: 2rem;
+        border-radius: 40px;
+  
+        tr {
+          th {
+            font-size: var(--h3-font-size);
+            font-family: var(--cabinet);
+            color: var(--title-color);
+            font-weight: 600;
+            letter-spacing: -0.01em;
+            line-height: 1.1em;
+            margin: 1.2rem 0 0.5rem;
+            text-align: left;
+          }
+          td {
+            background-color: var(--container-color);
+            font-family: var(--satoshi);
+            color: var(--title-color);
+            font-style: normal;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            line-height: 1.1em;
+  
+            .image {
+              width: 50px;
+              height: 25px;
+              object-fit: cover;
+            }
+  
+            .message {
+              width: 25px;
+              cursor: pointer;
+            }
+          }
+          &:nth-child(even) {
+            background-color: var(--body-color);
+          }
+        }
+      }
+    }
+  }.submit-button-container {
+    display: flex;
+    justify-content: center; // Centers the button horizontally
+    margin-top: 2rem; // Adds spacing between the table and the button container
+  }
+  
+  .submit-button {
+    font-size: var(--h3-font-size); // Matches button text size to existing styles
+    padding: 0.8rem 2rem; // Adds padding for a consistent button size
+    background-color: black; // Black background
+    color: var(--container-color); // Ensure good contrast and consistent theme
+    font-family: var(--cabinet); // Matches font-family with existing titles
+    font-weight: 600; // Bold button text
+    border: none;
+    border-radius: 40px; // Matches existing border-radius of the table
+    cursor: pointer; // Pointer cursor for interactivity
+    text-align: center; // Ensures text alignment inside the button
+  }
+  

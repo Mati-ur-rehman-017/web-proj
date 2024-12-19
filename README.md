@@ -24,13 +24,3 @@ To run the Agora project locally, follow these steps:
 5. Start the server using `npm start`.
 6. Access the application in your web browser at `http://localhost:3000`.
 
-## Documentation
-- [Software Requirements Specification (SRS)](link-to-srs-documentation)
-- [Design Documents](link-to-design-documents)
-- [API Documentation](link-to-api-documentation)
-
-## Contributing
-We welcome contributions from the community! If you'd like to contribute to the Agora project, please check out our [Contribution Guidelines](link-to-contribution-guidelines).
-
-## License
-This project is licensed under the [MIT License](link-to-license-file).
