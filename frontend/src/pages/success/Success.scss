@@ -1,0 +1,38 @@
+.paymnt__success {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--container-color);
+  //   border: 7px solid var(--text-color-light);
+  border-radius: 40px;
+  padding: 5rem 2rem;
+  margin-top: 2rem;
+
+  img {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    width: clamp(200px, 50%, 400px);
+    font-size: var(--h1-font-size);
+    font-weight: 500;
+    font-family: var(--cabinet);
+    color: var(--text-color);
+    text-align: center;
+    letter-spacing: -0.01em;
+    line-height: 1.1em;
+
+    span {
+      color: var(--title-color);
+      font-weight: 700;
+      font-family: var(--cabinet);
+      text-align: center;
+      letter-spacing: -0.01em;
+      line-height: 1.1em;
+    }
+  }
+}

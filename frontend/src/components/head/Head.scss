@@ -1,0 +1,32 @@
+.header {
+  width: 100%;
+  //   height: var(--header-height);
+  //   background-color: var(--container-color);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  margin: 1rem auto;
+  padding-top: var(--biggest-font-size);
+  border-radius: 40px;
+
+  &__title {
+    font-size: var(--head);
+    font-family: var(--cabinet);
+    color: var(--title-color);
+    font-style: normal;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.1em;
+  }
+
+  &__subtitle {
+    font-size: var(--h2-font-size);
+    font-family: var(--satoshi);
+    color: var(--text-color);
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.1em;
+    margin-top: 0.5rem;
+  }
+}

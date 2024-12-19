@@ -1,0 +1,113 @@
+.hero {
+  height: 600px;
+  display: flex;
+  justify-content: center;
+  color: var(--text-color);
+
+  .hero__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .hero__title {
+      max-width: 1000px;
+      font-size: var(--biggest-font-size);
+      font-family: var(--cabinet);
+      color: var(--title-color);
+      font-style: normal;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.1em;
+      text-align: center;
+
+      .hero__title-sub {
+        color: var(--text-color);
+        font-family: var(--cabinet);
+      }
+    }
+
+    .hero__search {
+      background-color: var(--container-color);
+      border-radius: 50px;
+      width: clamp(300px, 50%, 500px);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      // background-color: aqua;
+      // overflow: hidden;
+      padding: 0.5rem;
+      margin-top: var(--h1-font-size);
+
+      .hero__searchInput {
+        display: flex;
+        align-items: center;
+        padding-left: 20px;
+        width: 80%;
+        height: auto;
+
+        input {
+          border: none;
+          outline: none;
+          width: 100%;
+          font-size: 1rem;
+          font-weight: 600;
+
+          &::placeholder {
+            font-weight: 600;
+            color: var(--text-color);
+          }
+        }
+      }
+
+      .hero__search-btn {
+        width: 45px;
+        height: 45px;
+        border-radius: 25px;
+        border: none;
+        background-color: var(--text-color);
+        color: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        // align-self: flex-end;
+        cursor: pointer;
+
+        img {
+          width: 20px;
+          // height: 20px;
+          margin: 10px;
+        }
+      }
+    }
+
+    //   .popular {
+    //     display: flex;
+    //     align-items: center;
+    //     gap: 10px;
+
+    //     span {
+    //       width: max-content;
+    //     }
+
+    //     button {
+    //       width: max-content;
+    //       color: white;
+    //       border: 1px solid white;
+    //       padding: 5px 10px;
+    //       border-radius: 20px;
+    //       background-color: transparent;
+    //       font-size: 14px;
+    //     }
+    //   }
+
+    // .hero__bootom {
+    //   height: 100%;
+    //   img {
+    //     height: 100%;
+    //     object-fit: contain;
+    //   }
+    // }
+  }
+}

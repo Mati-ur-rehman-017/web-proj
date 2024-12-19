@@ -1,0 +1,67 @@
+.messages {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .container {
+    width: 100%;
+    padding: 50px 0px;
+
+    .title {
+      font-size: var(--h1-font-size);
+      font-family: var(--cabinet);
+      color: var(--title-color);
+      font-style: normal;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.1em;
+      margin-bottom: 2rem;
+    }
+
+    table {
+      width: 100%;
+      background-color: var(--container-color);
+      border-spacing: 2rem;
+      border-radius: 40px;
+
+      tr {
+        th {
+          font-size: var(--h3-font-size);
+          font-family: var(--cabinet);
+          color: var(--title-color);
+          font-weight: 600;
+          letter-spacing: -0.01em;
+          line-height: 1.1em;
+          margin: 1.2rem 0 0.5rem;
+          text-align: left;
+        }
+        td {
+          background-color: var(--container-color);
+          font-family: var(--satoshi);
+          color: var(--title-color);
+          font-style: normal;
+          font-weight: 500;
+          letter-spacing: -0.01em;
+          line-height: 1.1em;
+
+          &:first-child {
+            font-weight: 700;
+          }
+
+          &:nth-child(2),
+          &:nth-child(3) {
+            color: var(--text-color);
+          }
+        }
+
+        .read__btn {
+          padding: 0.5rem 1rem;
+        }
+
+        &.active {
+          background-color: var(--title-color);
+        }
+      }
+    }
+  }
+}

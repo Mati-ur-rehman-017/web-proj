@@ -1,0 +1,117 @@
+// .slider {
+//   position: relative;
+//   height: 400px;
+//   background-color: var(--container-color);
+//   border-radius: 40px;
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   overflow: hidden;
+//   border: 7px solid var(--container-color);
+//   color: var(--title-color);
+//   font-family: var(--cabinet);
+//   margin-bottom: 2rem;
+// }
+
+// img {
+//   //   width: 100%;
+//   border-radius: 40px;
+//   object-fit: cover;
+// }
+
+// .right-arrow {
+//   position: absolute;
+//   top: 50%;
+//   right: 32px;
+//   font-size: 3rem;
+//   color: #000;
+//   z-index: 10;
+//   cursor: pointer;
+//   user-select: none;
+// }
+
+// .left-arrow {
+//   position: absolute;
+//   top: 50%;
+//   left: 32px;
+//   font-size: 3rem;
+//   color: #000;
+//   z-index: 10;
+//   cursor: pointer;
+//   user-select: none;
+// }
+
+// .slide {
+//   width: 100%;
+//   opacity: 0;
+//   transition-duration: 1s ease;
+// }
+
+// .slide.active {
+//   width: 100%;
+
+//   opacity: 1;
+//   transition-duration: 1s;
+//   //   transform: scale(1.08);
+// }
+
+.slider-big {
+  position: relative;
+  height: 400px;
+  background-color: var(--container-color);
+  border-radius: 40px;
+  //   display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  overflow: hidden;
+  border: 7px solid var(--container-color);
+  color: var(--title-color);
+  font-family: var(--cabinet);
+  margin-bottom: 2rem;
+
+  .left-arrow {
+    position: absolute;
+    top: 50%;
+    left: 32px;
+    font-size: 3rem;
+    color: var(--body-color);
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .right-arrow {
+    position: absolute;
+    top: 50%;
+    right: 32px;
+    font-size: 3rem;
+    color: var(--body-color);
+
+    z-index: 10;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .slide {
+    width: 100%;
+    opacity: 0;
+    transition-duration: 1s ease;
+
+    img {
+      width: 100%;
+      border-radius: 40px;
+      object-fit: cover;
+    }
+  }
+
+  .slide.active {
+    width: 100%;
+    opacity: 1;
+    transition-duration: 1s;
+    img {
+      width: 100%;
+      border-radius: 40px;
+      object-fit: cover;
+    }
+  }
+}

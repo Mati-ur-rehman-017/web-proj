@@ -1,0 +1,94 @@
+.message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .msg__container {
+    width: 100%;
+    margin: 50px;
+
+    .breadcrumbs {
+      font-size: var(--h1-font-size);
+      font-family: var(--cabinet);
+      color: var(--title-color);
+      font-style: normal;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      line-height: 1.1em;
+      margin-bottom: 2rem;
+    }
+
+    .msgs {
+      margin: 1.5rem 0px;
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      height: 500px;
+      overflow: scroll;
+      overflow-x: hidden;
+      background-color: var(--container-color);
+      border-radius: 40px;
+
+      .item {
+        display: flex;
+        gap: 1rem;
+        max-width: 600px;
+
+        &.owner {
+          flex-direction: row-reverse;
+          align-self: flex-end;
+
+          p {
+            max-width: 500px;
+            border-radius: 30px 0px 30px 30px;
+            background-color: var(--title-color);
+            font-family: var(--satoshi);
+            color: var(--text-color-light);
+            font-style: normal;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            line-height: 1.1em;
+          }
+        }
+
+        img {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+
+        p {
+          max-width: 500px;
+          padding: 1.1rem;
+          border-radius: 0px 30px 30px 30px;
+          background-color: var(--text-color-light);
+          font-family: var(--satoshi);
+          color: var(--title-color);
+          font-style: normal;
+          font-weight: 500;
+          letter-spacing: -0.01em;
+          line-height: 1.1em;
+        }
+      }
+    }
+
+    hr {
+      height: 0;
+      border: 0.5px solid rgb(232, 230, 230);
+      margin-bottom: 20px;
+    }
+
+    .write__msg {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+
+      button {
+        padding: 1.4rem;
+      }
+    }
+  }
+}

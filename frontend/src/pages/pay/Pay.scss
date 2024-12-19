@@ -1,0 +1,25 @@
+.pay {
+  width: clamp(300px, 80%, 450px);
+
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+
+  button {
+    width: clamp(200px, 80%, 350px);
+    display: flex;
+    background-color: var(--title-color);
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    font-size: var(--h2-font-size);
+    font-family: var(--cabinet);
+    color: var(--text-color-light);
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.1em;
+    border: 1.5px solid var(--text-color-light);
+    padding: 1rem 2rem;
+    margin: 1rem auto;
+  }
+}
