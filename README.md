@@ -1,12 +1,22 @@
-# Agora Online Marketplace
+# BakeHeaven
 
-## Introduction
-Agora is an innovative online marketplace platform where users can buy, sell, rent items, and offer services. It provides a user-friendly interface for transactions and collaborations, fostering a secure and convenient marketplace experience.
+**BakeHeaven** is a unique online marketplace dedicated to bakery enthusiasts and professionals, where users can buy, sell, and rent baking-related items, as well as offer culinary services. Our platform connects passionate bakers, sellers, and buyers, fostering a collaborative community where everyone can share, learn, and thrive in the world of baking.
 
 ## Features
-- **Buying and Selling Items**: Users can browse, search, and list items for sale. Buyers can view item details, make purchases securely, and provide feedback.
-- **Renting Items**: Users can rent items from other users, with a seamless process for listing, renting, and returning items.
-- **Selling Skills**: Users can offer their skills and services for sale, showcasing their expertise and attracting potential clients.
+
+### Buying and Selling Bakery Goods
+- Users can browse, search, and list homemade baked goods for sale.
+- Buyers can explore delicious treats, cakes, cookies, pastries, and more.
+- Make secure purchases and leave feedback to support local bakers.
+
+### Renting Baking Equipment
+- Rent baking equipment such as mixers, ovens, cake stands, and other specialized tools.
+- Seamless process for listing, renting, and returning items.
+
+### Offering Culinary Skills and Services
+- Offer baking and cooking services, including personalized cakes, catering for events, or cooking classes.
+- Showcase your expertise, connect with others, and grow your culinary business within the community.
+
 
 ## Technologies Used
 - **Frontend**: React

@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
+import { Link } from "react-router-dom";
+import { FaShoppingCart } from "react-icons/fa"; // Import cart icon
 import "./Navbar.scss";
 import Navitem from "./navitem/Navitem";
-import React from "react";
 
 const menu = {
   open: {
@@ -46,15 +47,12 @@ export default function Navbar() {
           toggleMenu();
         }}
       >
-        <div className="navig__logo">Foodies</div>
+        <div className="navig__logo">bakeHeaven</div>
         <div className="navig__list">{isActive ? "close" : "menu"}</div>
+        <Link to="/cart" className="navig__cart">
+          <FaShoppingCart className="navig__cart-icon" />
+        </Link>
       </div>
-
-      {/* <div className="navbar">
-        <div className="navbar__item">agora</div>
-        <div className="navbar__item">acc</div>
-        <div className="navbar__item">menu</div>
-      </div> */}
     </div>
   );
 }

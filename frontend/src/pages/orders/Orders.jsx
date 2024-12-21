@@ -6,16 +6,36 @@ import newRequest from "../../utils/newRequest";
 
 const Orders = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
-
   const navigate = useNavigate();
+
+  // Fetch orders
   const { isLoading, error, data } = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      newRequest.get(`/orders`).then((res) => {
+      newRequest.get(`/orders`,{
+        params: {
+          userId: currentUser?._id, // Pass the user ID as a query parameter
+        },
+      }).then((res) => {
         console.log(res.data);
         return res.data;
       }),
+    staleTime: 0, // Disable cache reuse; always fetch fresh data
   });
+
+  const handleDelete = async (orderId) => {
+    if (window.confirm("Are you sure you want to delete this order?")) {
+      try {
+        await newRequest.delete(`/orders/${orderId}`);
+        alert("Order deleted successfully.");
+        // Refresh the page after deletion
+        window.location.reload();
+      } catch (err) {
+        console.error("Failed to delete the order:", err);
+        alert("An error occurred while deleting the order.");
+      }
+    }
+  };
 
   const handleContact = async (order) => {
     const sellerId = order.sellerId;
@@ -34,6 +54,7 @@ const Orders = () => {
       }
     }
   };
+
   return (
     <div className="orders container">
       {isLoading ? (
@@ -52,6 +73,7 @@ const Orders = () => {
                 <th>Title</th>
                 <th>Price</th>
                 <th>Contact</th>
+                <th>Actions</th>
               </tr>
             </thead>
             <tbody>
@@ -62,7 +84,7 @@ const Orders = () => {
                       <img className="image" src={order.img} alt="" />
                     </div>
                   </td>
-                  <td>{order.title}</td>
+                  <td>{order.itemName}</td>
                   <td>$ {order.price}</td>
                   <td>
                     <div className="image_cont">
@@ -73,6 +95,14 @@ const Orders = () => {
                         onClick={() => handleContact(order)}
                       />
                     </div>
+                  </td>
+                  <td>
+                    <button
+                      className="delete-button"
+                      onClick={() => handleDelete(order._id)}
+                    >
+                      Delete
+                    </button>
                   </td>
                 </tr>
               ))}

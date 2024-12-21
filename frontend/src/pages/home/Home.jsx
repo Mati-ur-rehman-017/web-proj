@@ -16,6 +16,7 @@ function Home() {
   const [items, setItems] = useState([]);
   const [filteredItems, setFilteredItems] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedCard, setSelectedCard] = useState(null);
   useEffect(() => {
     const fetchItems = async () => {
       try {
@@ -36,140 +37,102 @@ function Home() {
     const filtered = items.filter((item) => item.category === category);
     setFilteredItems(filtered);
   };
-  const handleAddToCart = (item) => {
-    // Fetch the current cart from local storage
-    console.log(item);
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-    // Check if the item already exists in the cart
-    const existingItem = cart.find(cartItem => cartItem._id === item._id);
-  
-    if (existingItem) {
-      // If the item exists, increase its quantity
-      existingItem.quantity += 1;
-    } else {
-      // If the item does not exist, add it with a quantity of 1
-      cart.push({ ...item, quantity: 1 });
-    }
-  
-    // Save the updated cart back to local storage
-    localStorage.setItem("cart", JSON.stringify(cart));
-  
-    console.log(`${item.itemName} added to cart`);
-  };
   
   return (
     <div className="home container">
       <Featured />
-      <TrustedBy />
+      {/* <TrustedBy /> */}
 
-      <section className="slider">
-        <h1>Trade treasures & talents! from books to bytes </h1>
-        <Swiper
-          slidesPerView={5}
-          spaceBetween={200}
-          pagination={{
-            clickable: true,
-          }}
-          loop={true}
-          modules={[Pagination]}
-          className="mySwiper"
-        >
-           {cards.map((card) => (
-            <SwiperSlide key={card.id} onClick={() => handleCategoryClick(card.title)}>
-              <CatCard key={card.id} card={card} />
-            </SwiperSlide>
-          ))}
-        </Swiper>
-      </section>
+      <h1>Trade treasures & talents! </h1>
+      <div className="item-oval-container">
+  {cards.map((card) => (
+    <div
+      key={card.id}
+      className={`item-oval ${selectedCard === card.id ? 'selected' : ''}`}
+      onClick={() =>{
+        setSelectedCard(card.id);
+        handleCategoryClick(card.title);
+      } }
+    >
+      {card.title}
+    </div>
+  ))}
+</div>
       <section className="items container">
-  <h1>Items in {selectedCategory || "All Categories"}</h1>
-  <div className="items__container">
-    {filteredItems.length > 0 ? (
-      filteredItems.map((item) => (
-        <div key={item.id} className="item">
-          <img src={item.img} alt={item.title} />
-          <h3>{item.title}</h3>
-          <p>{item.desc}</p>
-          {/* Add to Cart Button */}
-          <button className="add-to-cart-btn" onClick={() => handleAddToCart(item)}>
-            Add to Cart
-          </button>
-        </div>
-      ))
-    ) : (
-      <p>No items found in this category.</p>
-    )}
+      <h1>Items in {selectedCategory || "All Categories"}</h1>
+      <div className="item_container">
+        {filteredItems.length > 0 ? (
+          filteredItems.map((item) => (
+            // <div key={item.id} className="item">
+
+            //   <img src={item.img} alt={item.title} />
+            //   <h3>{item.title}</h3>
+            //   <p>{item.desc}</p>
+            //   {/* Add to Cart Button */}
+              // <button className="add-to-cart-btn" onClick={() => handleAddToCart(item)}>
+              //   Add to Cart
+              // </button>
+            // </div>
+            <CatCard key={item.id} card={item} />
+          ))
+        ) : (
+          <p>No items found in this category.</p>
+        )}
+      </div>
+</section>
+
+<section className="work container">
+  <h1>Things You Can Do</h1>
+
+  <div className="work__container">
+    <div className="work__item work__item-1 work__item-image">
+      <div className="work__item-info">
+        <h2>Learn to Bake with Expert-Led Courses</h2>
+        <p className="work__item-2-descitem">
+          Take part in hands-on baking courses and learn from experienced chefs. Master the art of creating everything from artisan breads to mouthwatering pastries.
+        </p>
+      </div>
+      <img src="./img/feat/feat4.jpg" alt="Baking Course" />
+    </div>
+    <div className="work__item work__item-2 work__item-image">
+      <div className="work__item-info">
+        <h2>Collaborate with Baking Experts</h2>
+        <p className="work__item-2-descitem">
+          Connect with seasoned bakers and culinary experts to collaborate on new recipes or refine your baking skills. Get feedback and tips from the pros.
+        </p>
+      </div>
+      <img src="./img/feat/feat1.jpg" alt="Collaborate with Experts" />
+    </div>
+    <div className="work__item work__item-3 work__item-image">
+      <div className="work__item-info">
+        <h2>Buy and Sell Delicious Homemade Goods</h2>
+        <p className="work__item-2-descitem">
+          Browse a marketplace of freshly baked goods made by local students and bakers. Support small businesses by purchasing unique homemade treats like cookies, cakes, and breads.
+        </p>
+      </div>
+      <img src="./img/feat/feat2.jpg" alt="Buy Homemade Goods" />
+    </div>
+    <div className="work__item work__item-4 work__item-image">
+      <div className="work__item-info">
+        <h2>Start Your Own Bakery Business</h2>
+        <p className="work__item-2-descitem">
+          Have a passion for baking? Start your own bakery venture and sell your delicious treats to the community. From cupcakes to cookies, turn your baking hobby into a profitable business.
+        </p>
+      </div>
+      <img src="./img/feat/feat3.jpg" alt="Start a Bakery Business" />
+    </div>
+    <div className="work__item work__item-5 work__item-image">
+      <div className="work__item-info">
+        <h2>Find Freelance Baking Services</h2>
+        <p className="work__item-2-descitem">
+          Whether you need a custom cake for an event or want to hire someone to bake for a special occasion, find talented freelance bakers to help you create something special.
+        </p>
+      </div>
+      <img src="./img/feat/feat5.jpg" alt="Freelance Baking Services" />
+    </div>
   </div>
 </section>
 
-      <section className="work container">
-        <h1>Things that you can do</h1>
-
-        <div className="work__container">
-          <div className="work__item work__item-1 work__item-image">
-            <div className="work__item-info">
-              <h2>Exchange Knowledge, Rent or Sell books or notes</h2>
-              <p className="work__item-2-descitem">
-                Connect with peers to share study materials, class notes, Save
-                money by renting or earn cash by selling course materials.
-              </p>
-            </div>
-
-            <img src="./img/feat/feat4.jpg" alt="" />
-          </div>
-          <div className="work__item work__item-2 work__item-image">
-            <div className="work__item-info">
-              <h2>
-                Rent Out High-Tech Lenses and Gear, rent your photography
-                skills.
-              </h2>
-              <p className="work__item-2-descitem">
-                Students can rent out photography equipment such as cameras,
-                lenses, and accessories to fellow students interested in
-                photography projects. They can also offer their photography
-                services for events or projects within the college.
-              </p>
-            </div>
-            <img src="./img/feat/feat1.jpg" alt="" />
-          </div>
-          <div className="work__item work__item-3 work__item-image">
-            <div className="work__item-info">
-              <h2>Turn Your Skills into Campus Currency</h2>
-              <p className="work__item-2-descitem">
-                Enable students to offer their skills and services for hire,
-                such as tutoring, graphic design, web development, content
-                writing, or video editing. Earn extra income while helping
-                others within the college community.
-              </p>
-            </div>
-            <img src="./img/feat/feat2.jpg" alt="" />
-          </div>
-          <div className="work__item work__item-4 work__item-image">
-            <div className="work__item-info">
-              <h2>find your next business partner</h2>
-              <p className="work__item-2-descitem">
-                Connect with like-minded students to collaborate on
-                entrepreneurial ventures, startup ideas, or creative projects.
-                Explore partnership opportunities and turn ideas into reality.
-              </p>
-            </div>
-            <img src="./img/feat/feat3.jpg" alt="" />
-          </div>
-          <div className="work__item work__item-5 work__item-image">
-            <div className="work__item-info">
-              <h2>A whole world of freelance talent at your fingertips</h2>
-              <p className="work__item-2-descitem">
-                Access a diverse pool of freelance talent within the college
-                community for various tasks and projects. From academic
-                assistance to creative endeavors, find skilled individuals to
-                get the job done.
-              </p>
-            </div>
-            <img src="./img/feat/feat5.jpg" alt="" />
-          </div>
-        </div>
-      </section>
 
       <section className="newsletter container">
         <div className="subs">

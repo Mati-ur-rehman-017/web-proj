@@ -43,14 +43,14 @@ export default function Navitem() {
             <div className="signedin__user-options">
               {currentUser.isSeller && (
                 <>
-                  <Link className="link" to="/mygigs">
-                    <a>Gigs</a>
-                  </Link>
                   <Link className="link" to="/add">
                     <a>Add New Item</a>
                   </Link>
                 </>
               )}
+              <Link className="link" to="/cart">
+                    <a>Cart</a>
+                  </Link>
               <Link className="link" to="/profile">
                 Profile
               </Link>

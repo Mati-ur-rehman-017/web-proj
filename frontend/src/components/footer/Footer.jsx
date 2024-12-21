@@ -4,7 +4,7 @@ import "./Footer.scss";
 function Footer() {
   return (
     <section className="container footer_container">
-      <div className="footer__logo">agora</div>
+      <div className="footer__logo">bakeHeaven.</div>
 
       <div className="footer__socials">
         <a href="http://">
@@ -30,7 +30,7 @@ function Footer() {
           <a href="http://">terms of service</a>
         </div>
         <div className="footer__copy">
-          <p>© 2024 agora. all rights reserved.</p>
+          <p>© 2024 bakeHeaven. all rights reserved.</p>
         </div>
         <div className="footer__privacy">
           <a href="http://">privacy policy</a>

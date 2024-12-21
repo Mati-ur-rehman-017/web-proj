@@ -119,7 +119,7 @@ function Profile() {
                 checked={user.isSeller}
                 onChange={handleSeller}
               />
-              <span className="slidertog round"></span>
+              <span className="slidertog round  "></span>
             </label>
           </div>
           <label htmlFor="" className="phlabel">
