@@ -46,6 +46,9 @@ export default function Navitem() {
                   <Link className="link" to="/add">
                     <a>Add New Item</a>
                   </Link>
+                  <Link className="link" to="/myOrder">
+                    <a>Orders for me</a>
+                  </Link>
                 </>
               )}
               <Link className="link" to="/cart">
