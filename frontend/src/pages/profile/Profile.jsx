@@ -1,164 +1,105 @@
-import React, { useState, useEffect } from "react";
-import upload from "../../utils/upload";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./Profile.scss";
 import newRequest from "../../utils/newRequest";
-import { useNavigate } from "react-router-dom";
 
-function Profile() {
-  const [file, setFile] = useState(null);
-  const [user, setUser] = useState({
-    username: "",
-    email: "",
-    password: "",
-    img: "",
-    country: "",
-    isSeller: false,
-    phone: "",
-    desc: "",
-  });
-
-  const [error, setError] = useState(null);
+const Profile = ({ currentUser }) => {
+  const { userId } = useParams();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
-
-  // Load user data from localStorage on component mount
+  const [isMyProf,setIsMyProf] = useState(false);
   useEffect(() => {
-    const storedUser = localStorage.getItem("currentUser");
-    if (storedUser) {
-      setUser(JSON.parse(storedUser));
-    }
-  }, []);
+    const fetchUserData = async () => {
+      console.log("Fetching user data for:", userId);
+      let userData;
 
-  // Handle input field changes
-  const handleChange = (e) => {
-    setUser((prev) => ({
-      ...prev,
-      [e.target.name]: e.target.value,
-    }));
-  };
+      if (userId) {
+        userData = await getUserDataById(userId);
+      } else {
+        setIsMyProf(true);
+        const storedUser = localStorage.getItem("currentUser");
+        userData = storedUser ? JSON.parse(storedUser) : null;
+      }
 
-  // Handle seller account toggle
-  const handleSeller = (e) => {
-    setUser((prev) => ({
-      ...prev,
-      isSeller: e.target.checked,
-    }));
-  };
+      console.log("Fetched user data:", userData);
+      setUser(userData);
+      setLoading(false);
+    };
 
-  // Handle profile update submission
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+    fetchUserData();
+  }, [userId]);
 
-    let imgUrl = user.img;
-    if (file) {
-      imgUrl = await upload(file);
-    }
-
+  const getUserDataById = async (userId) => {
     try {
-      const updatedUser = {
-        ...user,
-        img: imgUrl,
-      };
-      console.log('herr');
-      const res = await newRequest.put("/auth/update", updatedUser);
-      localStorage.setItem("currentUser", JSON.stringify(res.data)); // Update localStorage with updated data
-      alert("Profile updated successfully!");
-      navigate("/");
+      const response = await newRequest.get(`/users/${userId}`);
+      return response.data;
     } catch (err) {
-      console.error(err);
-      setError(err.response?.data || "An error occurred while updating the profile.");
+      console.error("Error retrieving user data:", err);
+      throw err;
     }
   };
+
+  if (loading || !user) {
+    return <div>Loading...</div>;
+  }
 
   return (
-    <div className="profile container">
-      <form onSubmit={handleSubmit} className="profile__form">
-        <div className="left">
-          <h1 className="profile__form-title">Edit Your Profile</h1>
-          <label htmlFor="">Username</label>
-          <input
-            name="username"
-            type="text"
-            placeholder="Enter a unique username"
-            value={user.username}
-            onChange={handleChange}
-          />
-          <label htmlFor="">Email</label>
-          <input
-            name="email"
-            type="email"
-            placeholder="Enter your email"
-            value={user.email}
-            onChange={handleChange}
-          />
-          <label htmlFor="">Password</label>
-          <input
-            name="password"
-            type="password"
-            placeholder="Enter a new password"
-            value={user.password}
-            onChange={handleChange}
-          />
-          <label htmlFor="">Profile Picture</label>
-          <input type="file" onChange={(e) => setFile(e.target.files[0])} />
-          <label htmlFor="">City</label>
-          <input
-            name="country"
-            type="text"
-            placeholder="Enter your city"
-            value={user.country}
-            onChange={handleChange}
-          />
+    <div style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
+      <div className="profile-card">
+        <div className="profile-header">
+          <img src={user.img} alt={`${user.username}'s profile`} className="profile-img" />
+          <h2 className="profile-name">{user.username}</h2>
         </div>
-        <div className="right">
-          <h1 className="profile__form-title">Seller Information</h1>
-          <div className="toggle">
-            <label htmlFor="" >Activate Seller Account</label>
-            <label className="switch">
-              <input
-                type="checkbox"
-                checked={user.isSeller}
-                onChange={handleSeller}
-              />
-              <span className="slidertog round"></span>
-            </label>
+        <div className="profile-details">
+          <div className="profile-row">
+            <span className="profile-label">Username</span>
+            <span className="profile-value">{user.username}</span>
           </div>
-          <label htmlFor="" className="phlabel">
-            Phone Number
-          </label>
-          <input
-            name="phone"
-            type="text"
-            placeholder="+91 8734345778"
-            value={user.phone}
-            onChange={handleChange}
-            className="phoneno"
-          />
-          <label htmlFor="">Description</label>
-          <textarea
-            placeholder="A short description of yourself"
-            name="desc"
-            cols="30"
-            rows="10"
-            value={user.desc}
-            onChange={handleChange}
-          ></textarea>
+          <div className="profile-row">
+            <span className="profile-label">Email</span>
+            <span className="profile-value">{user.email}</span>
+          </div>
+          <div className="profile-row">
+            <span className="profile-label">City</span>
+            <span className="profile-value">{user.country}</span>
+          </div>
+          {user.isSeller && (
+            <>
+              <div className="profile-row">
+                <span className="profile-label">Seller Status</span>
+                <span className="profile-value">Seller</span>
+              </div>
+              <div className="profile-row">
+                <span className="profile-label">Description</span>
+                <span className="profile-value">{user.desc || "No description"}</span>
+              </div>
+            </>
+          )}
+          {!user.isSeller && (
+            <div className="profile-row">
+              <span className="profile-label">Seller Status</span>
+              <span className="profile-value">No Seller</span>
+            </div>
+          )}
+          {isMyProf && (
+            <div className="profile-row">
+              <button className="btn-prof" onClick={() => navigate('/edit-profile')}>
+                Edit Profile
+              </button>
+            </div>
+          )}
+          {!isMyProf && (
+            <div className="profile-row">
+              <button className="btn-prof" onClick={() => navigate('/messages')}>
+                Message
+              </button>
+            </div>
+          )}
         </div>
-        <button
-          type="submit"
-          className="btn profile__btn"
-          style={{
-            display: "block", // Makes it a block element so it can be centered
-            margin: "10px auto", // Centers the button horizontally
-            padding: "10px 20px", // Adds padding (top-bottom: 10px, left-right: 20px)
-            textAlign: "center", // Aligns text in the center
-          }}
-        >
-          Update Profile
-        </button>
-        {error && <p className="error">{error}</p>}
-      </form>
+      </div>
     </div>
   );
-}
+};
 
 export default Profile;

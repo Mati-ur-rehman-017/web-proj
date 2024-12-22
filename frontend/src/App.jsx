@@ -19,6 +19,7 @@ import Pay from "./pages/pay/Pay";
 import Success from "./pages/success/Success";
 import Head from "./components/head/Head";
 import Profile from "./pages/profile/Profile";
+import EditProfile from "./pages/editprofile/EditProfile";
 
 function App() {
   const queryClient = new QueryClient();
@@ -46,8 +47,16 @@ function App() {
           element: <Home />,
         },
         {
-          path: "/profile",
+          path: "/profile/:userId",
           element: <Profile />,
+        },
+        {
+          path: "/profile/",
+          element: <Profile />,
+        },
+        {
+          path: "/edit-profile",
+          element: <EditProfile/>,
         },
         {
           path: "/cart",

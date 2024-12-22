@@ -1,49 +1,59 @@
-.login {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  
-    .login__form {
-      width: 360px;
-      padding: 100px 0px;
-      display: flex;
-      flex-direction: column;
-  
-      .login__form-title {
-        font-size: var(--h1-font-size);
-        font-family: var(--cabinet);
-        color: var(--title-color);
-        font-style: normal;
-        font-weight: 700;
-        letter-spacing: -0.01em;
-        line-height: 1.1em;
-        text-align: left;
-        margin-bottom: 1rem;
-      }
-  
-      label {
-        font-size: var(--h3-font-size);
-        font-family: var(--satoshi);
-        color: var(--text-color);
-        font-weight: 500;
-        padding: 0.5rem 0;
-      }
-  
-      input,
-      textarea {
-        padding: 20px;
-        border: 1px solid rgb(216, 214, 214);
-      }
-  
-      .login__btn {
-        padding: 1rem;
-        margin-top: 2rem;
-      }
-  
-      span {
-        color: red;
-        font-size: 12px;
-      }
-    }
-  }
-  
+.profile-card {
+  width: 400px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.1);
+  font-family: Arial, sans-serif;
+}
+
+.profile-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.profile-img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 8px;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.profile-username {
+  font-size: 14px;
+  color: #888;
+  margin: 0;
+}
+
+.profile-details {
+  margin-top: 16px;
+}
+
+.profile-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.profile-label {
+  font-weight: bold;
+  color: #555;
+}
+
+.profile-value {
+  color: #333;
+}
+
+.btn-prof {
+  background-color: #333;
+  color: #ddd;
+  padding: 8px;
+}

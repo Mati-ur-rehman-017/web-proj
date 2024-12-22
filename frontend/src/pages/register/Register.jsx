@@ -34,7 +34,10 @@ function Register() {
 
     const url = await upload(file);
     try {
-      console.log("ghhh");
+      console.log({
+        ...user,
+        img: url,
+      });
       await newRequest.post("/auth/register", {
         ...user,
         img: url,
