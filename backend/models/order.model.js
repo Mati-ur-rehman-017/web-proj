@@ -3,19 +3,11 @@ const { Schema } = mongoose;
 
 const OrderSchema = new Schema(
   {
-    gigId: {
+    itemName: {
       type: String,
       required: true,
     },
-    img: {
-      type: String,
-      required: false,
-    },
-    title: {
-      type: String,
-      required: true,
-    },
-    price: {
+    quantity: {
       type: Number,
       required: true,
     },
@@ -35,6 +27,14 @@ const OrderSchema = new Schema(
       type: String,
       required: true,
     },
+    img:{
+      type:String,
+      required:false,
+    },
+    price:{
+      type: Number,
+      required: true,
+    }
   },
   {
     timestamps: true,

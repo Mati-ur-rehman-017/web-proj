@@ -72,3 +72,16 @@
     }
   }
 }
+.delete-button {
+  background-color: #333; /* Set background to black */
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  cursor: pointer;
+  border-radius: 3px;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #333; /* Darker gray for hover effect */
+  }
+}

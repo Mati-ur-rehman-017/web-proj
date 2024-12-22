@@ -1,10 +1,10 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import "./Orders.scss";
+import "./Myorder.scss";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
 
-const Orders = () => {
+const Myorder = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const navigate = useNavigate();
 
@@ -12,15 +12,15 @@ const Orders = () => {
   const { isLoading, error, data } = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      newRequest.get(`/orders`,{
+      newRequest.get(`/orders/my`,{
         params: {
-          userId: currentUser?._id, // Pass the user ID as a query parameter
+          userId: currentUser?._id,
         },
       }).then((res) => {
         console.log(res.data);
         return res.data;
       }),
-    staleTime: 0, // Disable cache reuse; always fetch fresh data
+    staleTime: 0,
   });
 
   const handleDelete = async (orderId) => {
@@ -28,7 +28,6 @@ const Orders = () => {
       try {
         await newRequest.delete(`/orders/${orderId}`);
         alert("Order deleted successfully.");
-        // Refresh the page after deletion
         window.location.reload();
       } catch (err) {
         console.error("Failed to delete the order:", err);
@@ -64,7 +63,7 @@ const Orders = () => {
       ) : (
         <div className="orders__container">
           <div className="title-bar">
-            <h1 className="title">Orders</h1>
+            <h1 className="title">Orders for me</h1>
           </div>
           <table>
             <thead>
@@ -101,7 +100,7 @@ const Orders = () => {
                       className="delete-button"
                       onClick={() => handleDelete(order._id)}
                     >
-                      Delete
+                      Finish
                     </button>
                   </td>
                 </tr>
@@ -114,4 +113,4 @@ const Orders = () => {
   );
 };
 
-export default Orders;
+export default Myorder;

@@ -3,7 +3,7 @@
   bottom: 3rem;
   left: 0;
   right: 0;
-  width: clamp(200px, 80%, 400px);
+  width: clamp(250px, 85%, 450px);  /* Increased the width range */
   margin: 0 auto;
   background-color: var(--body-color);
   box-shadow: 0 0 30px var(--title-color);
@@ -28,6 +28,25 @@
     background-color: var(--title-color);
     border-radius: 24px;
     z-index: 1056;
+    
+    .navig__cart {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 30px; /* Increase overall size */
+      color: white; /* Make the cart icon white */
+      transition: transform 0.3s ease, color 0.3s ease;
+      padding-right: 10px;
+
+      &:hover {
+        transform: scale(1.2); /* Slight hover zoom effect */
+      }
+
+      .navig__cart-icon {
+        font-size: 2rem; /* Adjust icon size here */
+        color: white; /* Ensure the icon itself is white */
+      }
+    }
 
     .navig__logo {
       font-size: var(--h1-font-size);
@@ -44,6 +63,7 @@
       justify-content: center;
       align-items: center;
     }
+
     .navig__list {
       font-family: var(--cabinet);
       font-size: var(--h1-font-size);

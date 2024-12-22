@@ -7,7 +7,7 @@ export default function Head() {
     <div className="header container">
       <div>
         <Link to="/" className="header__title">
-          Foodies
+          bakeHeaven.
         </Link>
         <div className="header__subtitle">trade foods and talents!</div>
       </div>
