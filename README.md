@@ -9,9 +9,6 @@
 - Buyers can explore delicious treats, cakes, cookies, pastries, and more.
 - Make secure purchases and leave feedback to support local bakers.
 
-### Renting Baking Equipment
-- Rent baking equipment such as mixers, ovens, cake stands, and other specialized tools.
-- Seamless process for listing, renting, and returning items.
 
 ### Offering Culinary Skills and Services
 - Offer baking and cooking services, including personalized cakes, catering for events, or cooking classes.
