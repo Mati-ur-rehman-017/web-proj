@@ -18,8 +18,6 @@ const Messages = () => {
       }),
   });
 
-  console.log(data);
-
   const mutation = useMutation({
     mutationFn: (id) => {
       return newRequest.put(`/conversations/${id}`);

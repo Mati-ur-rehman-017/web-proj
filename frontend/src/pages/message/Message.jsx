@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import newRequest from "../../utils/newRequest";
 import "./Message.scss";
@@ -27,13 +27,62 @@ const Message = () => {
     },
   });
 
-  const handleSubmit = (e) => {
+  const createConversation = useMutation({
+    mutationFn: () => {
+      return newRequest.post(`/conversations`, {
+        to: id,
+      }); // Adjust payload for conversation creation
+    },
+    onSuccess: () => {
+      console.log("Conversation created successfully.");
+    },
+  });
+
+  useEffect(() => {
+    const checkAndCreateConversation = async () => {
+      try {
+        const res = await newRequest.get(`/conversations/single/${id}`);
+        if (!res.data) {
+
+          createConversation.mutate();
+        }
+      } catch (err) {
+        if (err.response && err.response.status === 404) {
+          // If conversation does not exist, create it
+          createConversation.mutate();
+        } else {
+          console.error("Error checking conversation:", err);
+        }
+      }
+    };
+
+    checkAndCreateConversation();
+  }, [id, createConversation]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    mutation.mutate({
+  
+    const messagePayload = {
       conversationId: id,
       desc: e.target[0].value,
-    });
-    e.target[0].value = "";
+      userId:currentUser._id,
+    };
+  
+    console.log("Attempting to send message with payload:", messagePayload);
+  
+    try {
+      // Make a direct POST request to your backend
+      const response = await newRequest.post(`/messages`, messagePayload);
+      console.log("Message successfully sent:", response.data);
+  
+      // Clear the input field after a successful POST
+      e.target[0].value = "";
+  
+      // Optionally, trigger a re-fetch of messages (if needed)
+      queryClient.invalidateQueries(["messages"]);
+    } catch (err) {
+      console.error("Error sending message:", err);
+    }
   };
 
   return (
@@ -66,7 +115,6 @@ const Message = () => {
             ))}
           </div>
         )}
-        {/* <hr /> */}
         <form className="write__msg" onSubmit={handleSubmit}>
           <textarea type="text" placeholder="write a message" />
           <button className="btn send__btn" type="submit">

@@ -51,6 +51,12 @@
       font-family: var(--cabinet);
       color: var(--text-color);
     }
+    .category__owner{
+      font-size: var(--normal-font-size);
+      font-weight: 500;
+      font-family: var(--satoshi);
+      color: var(--text-color-light);
+    }
   }
 
   .add-to-cart-btn {

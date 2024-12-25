@@ -3,40 +3,64 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./Profile.scss";
 import newRequest from "../../utils/newRequest";
 
-const Profile = ({ currentUser }) => {
+const Profile = () => {
   const { userId } = useParams();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [isMyProfile, setIsMyProfile] = useState(false);
   const navigate = useNavigate();
-  const [isMyProf,setIsMyProf] = useState(false);
+
   useEffect(() => {
     const fetchUserData = async () => {
       console.log("Fetching user data for:", userId);
-      let userData;
+      const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-      if (userId) {
-        userData = await getUserDataById(userId);
+      if (currentUser && currentUser._id === userId) {
+        setUser(currentUser);
+        setIsMyProfile(true);
       } else {
-        setIsMyProf(true);
-        const storedUser = localStorage.getItem("currentUser");
-        userData = storedUser ? JSON.parse(storedUser) : null;
+        try {
+          const response = await newRequest.get(`/users/${userId}`);
+          setUser(response.data);
+        } catch (err) {
+          console.error("Error retrieving user data:", err);
+        }
       }
-
-      console.log("Fetched user data:", userData);
-      setUser(userData);
       setLoading(false);
     };
 
     fetchUserData();
   }, [userId]);
 
-  const getUserDataById = async (userId) => {
+  const handleContact = async () => {
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if (!currentUser) {
+      console.error("No current user found");
+      return;
+    }
+
+    const sellerId = user.isSeller ? user._id : currentUser._id;
+    const buyerId = user.isSeller ? currentUser._id : user._id;
+    const conversationId = sellerId + buyerId;
+
     try {
-      const response = await newRequest.get(`/users/${userId}`);
-      return response.data;
+      // Check if the conversation already exists
+      const res = await newRequest.get(`/conversations/single/${conversationId}`);
+      navigate(`/message/${res.data.id}`);
     } catch (err) {
-      console.error("Error retrieving user data:", err);
-      throw err;
+      if (err.response?.status === 404) {
+        // If conversation doesn't exist, create a new one
+        try {
+          const res = await newRequest.post(`/conversations/`, {
+            to: user._id,
+          });
+          navigate(`/message/${res.data.id}`);
+        } catch (createError) {
+          console.error("Error creating conversation:", createError);
+        }
+      } else {
+        console.error("Error checking conversation:", err);
+      }
     }
   };
 
@@ -48,7 +72,11 @@ const Profile = ({ currentUser }) => {
     <div style={{ display: "flex", justifyContent: "center", padding: "20px" }}>
       <div className="profile-card">
         <div className="profile-header">
-          <img src={user.img} alt={`${user.username}'s profile`} className="profile-img" />
+          <img
+            src={user.img || "/default-profile.png"}
+            alt={`${user.username}'s profile`}
+            className="profile-img"
+          />
           <h2 className="profile-name">{user.username}</h2>
         </div>
         <div className="profile-details">
@@ -64,7 +92,7 @@ const Profile = ({ currentUser }) => {
             <span className="profile-label">City</span>
             <span className="profile-value">{user.country}</span>
           </div>
-          {user.isSeller && (
+          {user.isSeller ? (
             <>
               <div className="profile-row">
                 <span className="profile-label">Seller Status</span>
@@ -75,23 +103,24 @@ const Profile = ({ currentUser }) => {
                 <span className="profile-value">{user.desc || "No description"}</span>
               </div>
             </>
-          )}
-          {!user.isSeller && (
+          ) : (
             <div className="profile-row">
               <span className="profile-label">Seller Status</span>
               <span className="profile-value">No Seller</span>
             </div>
           )}
-          {isMyProf && (
+          {isMyProfile ? (
             <div className="profile-row">
-              <button className="btn-prof" onClick={() => navigate('/edit-profile')}>
+              <button
+                className="btn-prof"
+                onClick={() => navigate("/edit-profile")}
+              >
                 Edit Profile
               </button>
             </div>
-          )}
-          {!isMyProf && (
+          ) : (
             <div className="profile-row">
-              <button className="btn-prof" onClick={() => navigate('/messages')}>
+              <button className="btn-prof" onClick={handleContact}>
                 Message
               </button>
             </div>

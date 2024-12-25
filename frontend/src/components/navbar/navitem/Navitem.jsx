@@ -44,7 +44,7 @@ export default function Navitem() {
               {currentUser.isSeller && (
                 <>
                   <Link className="link" to="/add">
-                    <a>Add New Item</a>
+                    <a>Manage Items</a>
                   </Link>
                   <Link className="link" to="/myOrder">
                     <a>Orders for me</a>

@@ -1,18 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Myorder.scss";
 import { useQuery } from "@tanstack/react-query";
 import newRequest from "../../utils/newRequest";
+ 
 
 const Myorder = () => {
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
   const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 5;
 
   // Fetch orders
   const { isLoading, error, data } = useQuery({
     queryKey: ["orders"],
     queryFn: () =>
-      newRequest.get(`/orders/my`,{
+      newRequest.get(`/orders/my`, {
         params: {
           userId: currentUser?._id,
         },
@@ -54,6 +57,12 @@ const Myorder = () => {
     }
   };
 
+  // Pagination logic
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentOrders = data ? data.slice(startIndex, endIndex) : [];
+  const totalPages = data ? Math.ceil(data.length / itemsPerPage) : 0;
+
   return (
     <div className="orders container">
       {isLoading ? (
@@ -76,7 +85,7 @@ const Myorder = () => {
               </tr>
             </thead>
             <tbody>
-              {data.map((order) => (
+              {currentOrders.map((order) => (
                 <tr key={order._id}>
                   <td>
                     <div className="image_cont">
@@ -107,6 +116,25 @@ const Myorder = () => {
               ))}
             </tbody>
           </table>
+          <div className="pagination">
+            <button
+              className="pagination-button"
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage((prev) => prev - 1)}
+            >
+              Previous
+            </button>
+            <span>
+              Page {currentPage} of {totalPages}
+            </span>
+            <button
+              className="pagination-button"
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage((prev) => prev + 1)}
+            >
+              Next
+            </button>
+          </div>
         </div>
       )}
     </div>

@@ -45,12 +45,19 @@ export const getSingleConversation = async (req, res, next) => {
     const conversation = await Conversation.findOne({ id: req.params.id })
       .populate("sellerId")
       .populate("buyerId");
-    if (!conversation) return next(createError(404, "Not found!"));
+
+    if (!conversation) {
+      console.log("Conversation not found");
+      // Explicitly return a 404 error
+      return next(createError(404, "Conversation not found!"));
+    }
+
     res.status(200).send(conversation);
   } catch (err) {
-    next(err);
+    next(err); // Ensure errors are passed to the middleware
   }
 };
+
 
 export const getConversations = async (req, res, next) => {
   try {

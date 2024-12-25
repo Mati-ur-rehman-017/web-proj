@@ -3,17 +3,21 @@ import Message from "../models/message.model.js";
 import Conversation from "../models/conversation.model.js";
 
 export const createMessage = async (req, res, next) => {
+  console.log("hee");
+  
   const newMessage = new Message({
     conversationId: req.body.conversationId,
-    userId: req.userId,
+    userId: req.body.userId,
     desc: req.body.desc,
   });
   try {
     const savedMessage = await newMessage.save();
+
     const populatedMessage = await Message.populate(savedMessage, {
       path: "userId",
     });
-    await Conversation.findOneAndUpdate(
+
+    const updatedConversation = await Conversation.findOneAndUpdate(
       { id: req.body.conversationId },
       {
         $set: {
@@ -27,9 +31,11 @@ export const createMessage = async (req, res, next) => {
 
     res.status(201).send(populatedMessage);
   } catch (err) {
+    console.error("Error creating message:", err);
     next(err);
   }
 };
+
 
 export const getMessages = async (req, res, next) => {
   try {
