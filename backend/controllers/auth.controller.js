@@ -65,7 +65,6 @@ export const logout = async (req, res) => {
 };
 export const update = async (req, res, next) => {
   try {
-    console.log(req.body);
     const userId = req.body._id; // Assuming `req.user` is populated by a middleware that verifies the JWT token.
     const updates = req.body;
 

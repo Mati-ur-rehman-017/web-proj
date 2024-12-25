@@ -5,7 +5,8 @@
   "main": "server.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon server.js"
+    "start": "nodemon server.js",
+    "test": "mocha --require @babel/register tests/**/*.test.js --timeout 10000"
   },
   "author": "saawn",
   "license": "ISC",
@@ -20,5 +21,11 @@
     "mongoose": "^8.9.1",
     "nodemon": "^3.1.0",
     "stripe": "^15.2.0"
+  },
+  "devDependencies": {
+    "@babel/register": "^7.25.9",
+    "chai": "^5.1.2",
+    "mocha": "^11.0.1",
+    "supertest": "^7.0.0"
   }
 }

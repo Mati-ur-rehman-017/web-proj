@@ -7,7 +7,6 @@ export const getOrders = async (req, res, next) => {
     const { userId } = req.query; // Extract buyerId from query parameters
 
     const orders = await Order.find({ buyerId: userId }); // Fetch orders based on the filter
-    console.log(orders);
     res.status(200).send(orders); // Send filtered orders
   } catch (err) {
     next(err);
@@ -18,7 +17,6 @@ export const myOrder = async (req, res, next) => {
     const { userId } = req.query; // Extract buyerId from query parameters
 
     const orders = await Order.find({ sellerId: userId }); // Fetch orders based on the filter
-    console.log(orders);
     res.status(200).send(orders); // Send filtered orders
   } catch (err) {
     next(err);
@@ -29,7 +27,6 @@ export const myOrder = async (req, res, next) => {
 export const createOrder = async (req, res) => {
   try {
     const { orders } = req.body;
-    console.log(req.body);
     if (!orders || !Array.isArray(orders) || orders.length === 0) {
       return res.status(400).json({ message: "Orders array is required." });
     }
