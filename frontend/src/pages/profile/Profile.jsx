@@ -42,7 +42,6 @@ const Profile = () => {
     const sellerId = user.isSeller ? user._id : currentUser._id;
     const buyerId = user.isSeller ? currentUser._id : user._id;
     const conversationId = sellerId + buyerId;
-
     try {
       // Check if the conversation already exists
       const res = await newRequest.get(`/conversations/single/${conversationId}`);
@@ -50,9 +49,12 @@ const Profile = () => {
     } catch (err) {
       if (err.response?.status === 404) {
         // If conversation doesn't exist, create a new one
+        console.log("herer");
         try {
           const res = await newRequest.post(`/conversations/`, {
-            to: user._id,
+            to: currentUser._id,
+            userId:user._id,
+            isSeller: user.isSeller,
           });
           navigate(`/message/${res.data.id}`);
         } catch (createError) {

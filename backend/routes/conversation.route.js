@@ -9,7 +9,7 @@ import {
 import { verifyToken } from "../middleware/jwt.js";  // Middleware to verify JWT token
 const router = express.Router();
 
-router.get("/",verifyToken,  getConversations);
+router.get("/",getConversations);
 router.post("/",  createConversation);
 router.get("/single/:id",  getSingleConversation);
 router.put("/:id", verifyToken, updateConversation);

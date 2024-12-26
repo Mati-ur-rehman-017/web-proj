@@ -42,6 +42,11 @@ function Register() {
         ...user,
         img: url,
       });
+      const res = await newRequest.post("/auth/login", { 
+        username: user.username, 
+        password: user.password 
+      });
+      localStorage.setItem("currentUser", JSON.stringify(res.data));
       navigate("/");
     } catch (err) {
       console.log(err);

@@ -49,10 +49,16 @@ const Orders = () => {
       navigate(`/message/${res.data.id}`);
     } catch (err) {
       if (err.response.status === 404) {
-        const res = await newRequest.post(`/conversations/`, {
-          to: currentUser.seller ? buyerId : sellerId,
-        });
-        navigate(`/message/${res.data.id}`);
+        try {
+          const res = await newRequest.post(`/conversations/`, {
+            to: currentUser._id,
+            userId:sellerId,
+            isSeller: currentUser.isSeller,
+          });
+          navigate(`/message/${res.data.id}`);
+        } catch (createError) {
+          console.error("Error creating conversation:", createError);
+        }
       }
     }
   };

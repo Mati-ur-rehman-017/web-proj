@@ -134,7 +134,7 @@ function Home() {
 </section>
 
 
-      <section className="newsletter container">
+      {/* <section className="newsletter container">
         <div className="subs">
           <h1>
             Don&apos;t miss our newsletters,
@@ -150,7 +150,7 @@ function Home() {
           </div>
         </div>
       </section>
-      
+       */}
     </div>
   );
 }

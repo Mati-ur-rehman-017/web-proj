@@ -11,16 +11,18 @@ const Messages = () => {
   const queryClient = useQueryClient();
 
   const { isLoading, error, data } = useQuery({
+    
     queryKey: ["conversations"],
-    queryFn: () =>
-      newRequest.get(`/conversations`).then((res) => {
-        return res.data;
-      }),
+    queryFn: () =>newRequest.get(`/conversations`, {
+      params: { userId: `${currentUser._id}`, isSeller: currentUser.isSeller },
+    }).then((res) => res.data),
+     
   });
 
   const mutation = useMutation({
     mutationFn: (id) => {
       return newRequest.put(`/conversations/${id}`);
+      
     },
     onSuccess: () => {
       queryClient.invalidateQueries(["conversations"]);
@@ -62,7 +64,7 @@ const Messages = () => {
                   key={c.id}
                 >
                   <td>
-                    {currentUser.isSeller
+                    {currentUser.username!==c.buyerId.username
                       ? c.buyerId.username
                       : c.sellerId.username}
                   </td>

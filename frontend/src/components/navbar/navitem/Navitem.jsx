@@ -54,9 +54,10 @@ export default function Navitem() {
               <Link className="link" to="/cart">
                     <a>Cart</a>
                   </Link>
-              <Link className="link" to="/profile">
-                Profile
-              </Link>
+                  <Link className="link" to={`/profile/${currentUser._id}`}>
+  Profile
+</Link>
+
               <Link className="link" to="/orders">
                 Orders
               </Link>

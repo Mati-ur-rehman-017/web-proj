@@ -3,11 +3,11 @@ import Conversation from "../models/conversation.model.js";
 
 export const createConversation = async (req, res, next) => {
   const newConversation = new Conversation({
-    id: req.isSeller ? req.userId + req.body.to : req.body.to + req.userId,
-    sellerId: req.isSeller ? req.userId : req.body.to,
-    buyerId: req.isSeller ? req.body.to : req.userId,
-    readBySeller: req.isSeller,
-    readByBuyer: !req.isSeller,
+    id: req.body.isSeller ? req.body.userId + req.body.to : req.body.to + req.body.userId,
+    sellerId: req.body.isSeller ? req.body.userId : req.body.to,
+    buyerId: req.body.isSeller ? req.body.to : req.body.userId,
+    readBySeller: req.body.isSeller,
+    readByBuyer: !req.body.isSeller,
   });
 
   try {
@@ -48,7 +48,6 @@ export const getSingleConversation = async (req, res, next) => {
 
     if (!conversation) {
       console.log("Conversation not found");
-      // Explicitly return a 404 error
       return next(createError(404, "Conversation not found!"));
     }
 
@@ -61,12 +60,16 @@ export const getSingleConversation = async (req, res, next) => {
 
 export const getConversations = async (req, res, next) => {
   try {
-    const conversations = await Conversation.find(
-      req.isSeller ? { sellerId: req.userId } : { buyerId: req.userId }
-    )
+    const conversations = await Conversation.find({
+      $or: [
+        { sellerId: req.query.userId },
+        { buyerId: req.query.userId }
+      ]
+    })
       .populate("sellerId")
       .populate("buyerId")
       .sort({ updatedAt: -1 });
+    console.log("Conversations:", conversations);
     res.status(200).send(conversations);
   } catch (err) {
     next(err);
