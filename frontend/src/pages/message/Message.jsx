@@ -6,6 +6,7 @@ import "./Message.scss";
 
 const Message = () => {
   const { id } = useParams();
+  console.log(id);
   const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
   const queryClient = useQueryClient();
@@ -43,7 +44,6 @@ const Message = () => {
       try {
         const res = await newRequest.get(`/conversations/single/${id}`);
         if (!res.data) {
-
           createConversation.mutate();
         }
       } catch (err) {
@@ -61,23 +61,23 @@ const Message = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
     const messagePayload = {
       conversationId: id,
       desc: e.target[0].value,
-      userId:currentUser._id,
+      userId: currentUser._id,
     };
-  
+
     console.log("Attempting to send message with payload:", messagePayload);
-  
+
     try {
       // Make a direct POST request to your backend
       const response = await newRequest.post(`/messages`, messagePayload);
       console.log("Message successfully sent:", response.data);
-  
+
       // Clear the input field after a successful POST
       e.target[0].value = "";
-  
+
       // Optionally, trigger a re-fetch of messages (if needed)
       queryClient.invalidateQueries(["messages"]);
     } catch (err) {
