@@ -43,7 +43,7 @@ export const cards = [
   },
   {
     id: 8,
-    title: "Special Item",
+    title: "Special Items",
     desc: "Try our limited edition bakery special this week!",
     img: "https://images.pexels.com/photos/5593124/pexels-photo-5593124.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2",
     // link: "/special-item", // Add link to the special item page
