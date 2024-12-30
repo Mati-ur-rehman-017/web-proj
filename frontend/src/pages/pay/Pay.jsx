@@ -6,9 +6,8 @@ import newRequest from "../../utils/newRequest";
 import { useParams } from "react-router-dom";
 import CheckoutForm from "../../components/checkoutForm/CheckoutForm";
 
-const stripePromise = loadStripe(
-  "pk_test_51P6d46SFLNxiGwcC6QgCiiN5xvuKpkM6Lin1al71gZKck2wacBjx6tuxsmES7Xspcalu1TKc62bQW0lT7DRIR2Cf00NmtGRqNU"
-);
+const stripePromise = loadStripe("pk_test_51QboEBLhdLmAeuSw3yP33W6XicscZrmZBaIBqvybxc3rRxlqDD0rNfj2RjrHUkTDHBO6C4rHuVkh2GicMK7nezYF00jJzzimsa"); // Replace with your Stripe publishable key
+
 
 const Pay = () => {
   const [clientSecret, setClientSecret] = useState("");
@@ -19,7 +18,7 @@ const Pay = () => {
     const makeRequest = async () => {
       try {
         const res = await newRequest.post(
-          `/orders/create-payment-intent/${id}`
+          `/create-payment-intent/${id}`
         );
         setClientSecret(res.data.clientSecret);
       } catch (err) {

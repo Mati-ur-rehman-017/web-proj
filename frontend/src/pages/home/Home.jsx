@@ -39,6 +39,7 @@ function Home() {
 
   return (
     <div className="home container">
+      <Featured />
       {/* <TrustedBy /> */}
 
       <h1>Trade treasures & talents! </h1>
@@ -160,7 +161,6 @@ function Home() {
         </div>
       </section>
        */}
-      <Featured />
     </div>
   );
 }

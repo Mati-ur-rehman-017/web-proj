@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import "./Cart.scss";
 import newRequest from "../../utils/newRequest";
-
+import { useNavigate } from "react-router-dom";
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]);
-
+    const navigate = useNavigate();
+  
   // Fetch cart items from local storage on component mount
   useEffect(() => {
     const items = JSON.parse(localStorage.getItem("cart")) || [];
@@ -20,7 +21,7 @@ const Cart = () => {
   // Increase item quantity
   const increaseQuantity = (itemId) => {
     const updatedCart = cartItems.map((item) =>
-      item.id === itemId ? { ...item, quantity: item.quantity + 1 } : item
+      item._id === itemId ? { ...item, quantity: item.quantity + 1 } : item
     );
     setCartItems(updatedCart);
     updateCartInLocalStorage(updatedCart);
@@ -28,20 +29,22 @@ const Cart = () => {
 
   // Decrease item quantity
   const decreaseQuantity = (itemId) => {
+    console.log(itemId);
     const updatedCart = cartItems
       .map((item) =>
-        item.id === itemId && item.quantity > 1
+        item._id === itemId && item.quantity > 1
           ? { ...item, quantity: item.quantity - 1 }
           : item
       )
       .filter((item) => item.quantity > 0); // Remove items with quantity 0
     setCartItems(updatedCart);
     updateCartInLocalStorage(updatedCart);
+    
   };
 
   // Remove item from cart
   const removeItem = (itemId) => {
-    const updatedCart = cartItems.filter((item) => item.id !== itemId);
+    const updatedCart = cartItems.filter((item) => item._id !== itemId);
     setCartItems(updatedCart);
     updateCartInLocalStorage(updatedCart);
   };
@@ -50,6 +53,9 @@ const Cart = () => {
   const handleSubmit = async () => {
     try {
       const buyer = JSON.parse(localStorage.getItem("currentUser"));
+      if(buyer === null){
+        navigate("/login");
+      }
       console.log(buyer._id);
       // Map cart items to the required order format
       const orders = cartItems.map((item) => ({
@@ -102,7 +108,7 @@ const Cart = () => {
           </thead>
           <tbody>
             {cartItems.map((item) => (
-              <tr key={item.id}>
+              <tr key={item._id}>
                 <td>
                   <div className="image_cont">
                     <img className="image" src={item.img} alt={item.itemName} />
@@ -113,9 +119,9 @@ const Cart = () => {
                 <td>{item.quantity}</td>
                 <td>
                   <div className="actions">
-                    <button onClick={() => increaseQuantity(item.id)}>+</button>
-                    <button onClick={() => decreaseQuantity(item.id)}>-</button>
-                    <button onClick={() => removeItem(item.id)}>Remove</button>
+                    <button onClick={() => increaseQuantity(item._id)}>+</button>
+                    <button onClick={() => decreaseQuantity(item._id)}>-</button>
+                    <button onClick={() => removeItem(item._id)}>Remove</button>
                   </div>
                 </td>
               </tr>

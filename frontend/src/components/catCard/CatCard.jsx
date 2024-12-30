@@ -33,7 +33,7 @@ function CatCard({ card }) {
         <div className="category__details">
           <p className="category__title">{card.itemName}</p>
           <p className="category__desc">{card.description}</p>
-          <p className="category__title">Price: {card.price}</p>
+          <p className="category__title">Price: Rs.{card.price}</p>
           <p className="category__owner">
             Owner:
             <span className="owner-link" onClick={handleContact}>
