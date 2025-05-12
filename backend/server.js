@@ -13,10 +13,6 @@ import Stripe from "stripe";
 dotenv.config();
 
 const app = express();
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
-
-const publishableKey = process.env.STRIPE_PUBLISHABLE_KEY;
-
 
 const connect = async () => {
   try {

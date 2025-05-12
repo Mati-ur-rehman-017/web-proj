@@ -27,7 +27,7 @@ To run the Agora project locally, follow these steps:
 1. Clone this repository to your local machine.
 2. Navigate to the project directory.
 3. Install dependencies using `npm install`.
-4. Set up environment variables (e.g., MongoDB URI, Stripe API key).
+4. Set up environment variables (e.g., MongoDB URI, JWT token,Cloudinary API key).
 5. Start the server using `npm start`.
 6. Access the application in your web browser at `http://localhost:3000`.
 
